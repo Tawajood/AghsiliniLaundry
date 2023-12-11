@@ -29,6 +29,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AghsiliniLaundry"
         tools:targetApi="31">
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <activity
             android:name=".ui.activity.AuthActivity"
             android:exported="true">

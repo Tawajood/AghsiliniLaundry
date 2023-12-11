@@ -23,6 +23,7 @@ object Constants {
     const val AR = "ar"
     const val YES = "yes"
     const val NO = "no"
+    const val OPEN_NOTIFICATION = "open_notification"
 
     const val NEW ="new"
     const val WAITING_DRIVER ="waiting_driver"

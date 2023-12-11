@@ -1,5 +1,6 @@
 package com.dotjoo.aghsilinilaundry.ui.fragment.main.more
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
 import androidx.core.view.isVisible
@@ -15,8 +16,11 @@ import com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.SettingAction
 import com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.SettingViewModel
 import com.dotjoo.aghsilinilaundry.util.Constants
 import com.dotjoo.aghsilinilaundry.util.ext.hideKeyboard
+import com.dotjoo.aghsilinilaundry.util.ext.showActivity
 import com.dotjoo.aghsilinilaundry.util.observe
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class MoreFragment : BaseFragment<FragmentMoreBinding>() {
@@ -31,12 +35,18 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
             }
 
         }
+        if (PrefsHelper.getLanguage()==Constants.AR) {
+            binding.tvLang.text="EN"
+        }else{
+            binding.tvLang.text="AR"
+        }
         binding.swiperefreshHome.setOnRefreshListener {
             mViewModel.getWallet()
-            if (binding.swiperefreshHome != null) binding.swiperefreshHome.isRefreshing = false
+            binding.swiperefreshHome.isRefreshing = false
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun handleViewState(action: SettingAction) {
         when (action) {
             is SettingAction.ShowLoading -> {
@@ -58,10 +68,13 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
             }
 
             is SettingAction.ShowBalanceInWallet -> {
-                binding.tvCommestionValue.setText(action.data.commetion + resources.getString(R.string.sr))
-                binding.tvProfitValue.setText(action.data.net_profit + resources.getString(R.string.sr))
-                binding.tvTotalValue.setText(action.data.total_sales + resources.getString(R.string.sr))
-         binding.lytBalanceDetails.isVisible= true   }
+                val df = DecimalFormat("#.##")
+                df.roundingMode = RoundingMode.CEILING
+                binding.tvCommestionValue.setText(df.format(action.data.commetion!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvProfitValue.setText(df.format(action.data.net_profit!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvTotalValue.setText(df.format(action.data.total_sales!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.lytBalanceDetails.isVisible = true
+            }
 
             else -> {
 
@@ -76,7 +89,15 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         binding.tvLogout.setPaintFlags(binding.tvLogout.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
         parent = requireActivity() as MainActivity
         parent.showBottomNav(true)
-
+        binding.tvSetting.setOnClickListener {
+            if (PrefsHelper.getLanguage()==Constants.EN) {
+                PrefsHelper.setLanguage(Constants.AR)
+                showActivity(MainActivity::class.java, clearAllStack = true)
+            } else {
+                PrefsHelper.setLanguage(Constants.EN)
+                showActivity(MainActivity::class.java, clearAllStack = true)
+            }
+        }
 
         binding.tvContactus.setOnClickListener {
             findNavController().navigate(R.id.contactUsFragment)
@@ -84,14 +105,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         binding.tvAboutUs.setOnClickListener {
             findNavController().navigate(R.id.aboutFragment)
         }
-        binding.tvSetting.setOnClickListener {
-            if (PrefsHelper.getLanguage() == Constants.EN) binding.tvLang.setText(
-                resources.getString(
-                    R.string.ar
-                )
-            )
 
-        }
         binding.tvTerms.setOnClickListener {
             findNavController().navigate(R.id.termsFragment)
         }
