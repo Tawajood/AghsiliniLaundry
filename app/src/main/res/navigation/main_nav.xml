@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.home.OrderFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.more.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
+    <dialog
+        android:id="@+id/loginFirstBotomSheetFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.dialog.LoginFirstBotomSheetFragment"
+        android:label="LoginFirstBotomSheetFragment" />
+    <fragment
+        android:id="@+id/orderInfoFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.orderInfo.OrderInfoFragment"
+        android:label="fragment_order_info"
+        tools:layout="@layout/fragment_order_info" />
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.ContactUsFragment"
+        android:label="ContactUsFragment" />
+    <fragment
+        android:id="@+id/notifactionFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.NotifactionFragment"
+        android:label="NotifactionFragment" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.TermsFragment"
+        android:label="TermsFragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.AboutFragment"
+        android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/itFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.ItFragment"
+        android:label="ItFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.edit_profile.EditProfileFragment"
+        android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/addUpdateItemFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.edit_profile.AddUpdateItemFragment"
+        android:label="AddUpdateItemFragment" />
+    <fragment
+        android:id="@+id/editItemsFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.main.edit_profile.EditItemsFragment"
+        android:label="EditItemsFragment" />
+    <dialog
+        android:id="@+id/changePasswordSheetFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.dialog.ChangePasswordSheetFragment"
+        android:label="ChangePasswordSheetFragment" />
+    <dialog
+        android:id="@+id/changeDelteAccountSheetFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.dialog.ChangeDelteAccountSheetFragment"
+        android:label="ChangeDelteAccountSheetFragment" />
+</navigation>
