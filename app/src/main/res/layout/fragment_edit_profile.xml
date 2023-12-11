@@ -155,17 +155,18 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/et_name" />
+
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/ccp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:elevation="@dimen/_12sdp"
                         app:ccpDialog_cornerRadius="@dimen/_12sdp"
                         app:ccp_arrowColor="@color/black"
                         app:ccp_autoDetectCountry="true"
                         app:ccp_contentColor="@color/black"
                         app:ccp_defaultNameCode="sa"
-                        android:elevation="@dimen/_12sdp"
                         app:ccp_excludedCountries="il"
                         app:ccp_rememberLastSelection="true"
                         app:ccp_showNameCode="false"
@@ -173,6 +174,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/et_phone"
                         app:layout_constraintEnd_toEndOf="@+id/et_phone"
                         app:layout_constraintTop_toTopOf="@+id/et_phone" />
+
                     <EditText
                         android:id="@+id/et_phone"
                         android:layout_width="match_parent"
