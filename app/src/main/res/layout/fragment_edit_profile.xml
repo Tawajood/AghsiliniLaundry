@@ -10,7 +10,7 @@
     <com.dotjoo.aghsilinilaundry.base.OnlyVerticalSwipeRefreshLayout
         android:id="@+id/swiperefresh_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"    >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,8 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_42sdp"
                 android:layout_marginHorizontal="@dimen/_23sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_light_blue"
-                android:layout_marginTop="@dimen/_10sdp"  app:layout_constraintBottom_toBottomOf="@id/lyt_header_blue"
+                app:layout_constraintBottom_toBottomOf="@id/lyt_header_blue"
                 app:layout_constraintEnd_toEndOf="@id/et_search"
                 app:layout_constraintStart_toStartOf="@id/et_search"
                 app:layout_constraintTop_toTopOf="@id/lyt_header_blue">
@@ -70,11 +71,11 @@
                     android:layout_width="@dimen/_33sdp"
                     android:layout_height="@dimen/_33sdp"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginVertical="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginVertical="@dimen/_4sdp"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="@dimen/_40sdp" >
+                    app:cardCornerRadius="@dimen/_40sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_30sdp"
@@ -85,27 +86,33 @@
                         android:padding="@dimen/_7sdp"
                         android:src="@drawable/ic_close" />
                 </androidx.cardview.widget.CardView>
+
                 <ImageView
+                    android:id="@+id/card_gallay"
                     android:layout_width="wrap_content"
-                 android:id="@+id/card_gallay"   android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_height="match_parent"
- android:layout_toStartOf="@id/card_close"
                     android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                     android:src="@drawable/gallery_with_card" />
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_toStartOf="@id/card_close"
+                    android:src="@drawable/gallery_with_card" />
             </RelativeLayout>
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@color/white"
                 android:fillViewport="true"
-                app:layout_constraintTop_toBottomOf="@id/lyt_header_blue"
+                android:paddingBottom="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingBottom="@dimen/_11sdp">
+                app:layout_constraintTop_toBottomOf="@id/lyt_header_blue">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/lyt_data"    android:layout_width="match_parent"
-               android:visibility="gone"     android:layout_height="match_parent">
+                    android:id="@+id/lyt_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -148,7 +155,24 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/et_name" />
-
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:ccpDialog_cornerRadius="@dimen/_12sdp"
+                        app:ccp_arrowColor="@color/black"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_contentColor="@color/black"
+                        app:ccp_defaultNameCode="sa"
+                        android:elevation="@dimen/_12sdp"
+                        app:ccp_excludedCountries="il"
+                        app:ccp_rememberLastSelection="true"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_phone"
+                        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+                        app:layout_constraintTop_toTopOf="@+id/et_phone" />
                     <EditText
                         android:id="@+id/et_phone"
                         android:layout_width="match_parent"
@@ -164,6 +188,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_phone" />
+
                     <TextView
                         android:id="@+id/tv_2"
                         android:layout_width="0dp"
@@ -184,10 +209,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_15sdp"
-                         android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
                         android:background="@drawable/bg_light_blue"
                         android:drawableEnd="@drawable/ic_location"
-                        android:drawablePadding="@dimen/_10sdp" android:gravity="center_vertical"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="center_vertical"
                         android:hint="@string/address"
                         android:minHeight="@dimen/_40sdp"
                         android:paddingHorizontal="@dimen/_15sdp"
@@ -198,6 +224,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_2" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_save"
                         android:layout_width="match_parent"
@@ -227,6 +254,7 @@
                         app:layout_constraintTop_toBottomOf="@id/btn_save"
                         app:strokeColor="@color/light_grey"
                         app:strokeWidth="@dimen/_1sdp" />
+
                     <View
                         android:id="@+id/v2"
                         android:layout_width="match_parent"
@@ -346,4 +374,5 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.dotjoo.aghsilinilaundry.base.OnlyVerticalSwipeRefreshLayout></layout>
+    </com.dotjoo.aghsilinilaundry.base.OnlyVerticalSwipeRefreshLayout>
+</layout>

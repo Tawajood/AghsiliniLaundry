@@ -40,11 +40,11 @@ import javax.inject.Inject
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     lateinit var parent: MainActivity
     val mViewModel: AccountViewModel by activityViewModels()
-    var countryCode = "+20"
     var lat: String? = ""
     var lon: String? = ""
     var address: String? = ""
-    var logo : File? = null
+    var logo: File? = null
+
     @Inject
     lateinit var locationManager: WWLocationManager
 
@@ -53,7 +53,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     override fun onFragmentReady() {
         onclick()
-         mViewModel.apply {
+        mViewModel.apply {
             getProfileData()
             observe(viewState) {
                 handleViewState(it)
@@ -65,7 +65,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
             if (binding.swiperefreshHome != null) binding.swiperefreshHome.isRefreshing = false
         }
     }
-
 
 
     fun handleViewState(action: AccountAction) {
@@ -86,15 +85,15 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                 }
             }
 
-      is AccountAction.ShowProfile ->  {
-          action.data.laundry?.let { setupLaundry(it) }
-
-            }
-      is AccountAction.ProfileUpdated ->  {
-          action.msg?.let { showToast(it) }
+            is AccountAction.ShowProfile -> {
+                action.data.laundry?.let { setupLaundry(it) }
 
             }
 
+            is AccountAction.ProfileUpdated -> {
+                action.msg?.let { showToast(it) }
+
+            }
 
 
             else -> {
@@ -104,17 +103,17 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     }
 
 
-    private fun setupLaundry(laundry :Laundry) {
+    private fun setupLaundry(laundry: Laundry) {
         laundry?.let {
             binding.etName.setText(it.name)
             binding.etAddress.setText(it.address)
-          binding.ivProfile.loadImage(it.logo)
+            binding.ivProfile.loadImage(it.logo)
             binding.etPhone.setText(it.phone)
-      binding.lytData.isVisible= true
+            binding.lytData.isVisible = true
             lat = laundry.lat
             lon = laundry.lon
             address = laundry.address
-            countryCode = laundry.countryCode.toString()
+            binding.ccp.setCountryForPhoneCode(laundry.countryCode!!.replace("+", "").toInt())
 
         }
     }
@@ -130,7 +129,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
         }
         binding.lytChangePass.setOnClickListener {
-         findNavController().navigate(R.id.editProfileFragment)
+            findNavController().navigate(R.id.editProfileFragment)
         }
 
         binding.cardClose.setOnClickListener {
@@ -142,20 +141,23 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         binding.btnEdititems.setOnClickListener {
             findNavController().navigate(R.id.editItemsFragment)
         }
-       binding.etAddress.setOnClickListener {
-           checkLocation()
-       }
+        binding.etAddress.setOnClickListener {
+            checkLocation()
+        }
         binding.cardGallay.setOnClickListener {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
         }
         binding.btnSave.setOnClickListener {
-          lat?.let { it1 ->
-              mViewModel.updateProfile(  UpdateProfileParam(
-                    binding.etName.text.toString(),
-                    countryCode,
-                    binding.etPhone.text.toString(),
-                    it1, lon!!, address,logo))
+            lat?.let { it1 ->
+                mViewModel.updateProfile(
+                    UpdateProfileParam(
+                        binding.etName.text.toString(),
+                        "+${binding.ccp.selectedCountryCode}",
+                        binding.etPhone.text.toString(),
+                        it1, lon!!, address, logo
+                    )
+                )
             }
 
 
@@ -168,7 +170,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                 this@EditProfileFragment.lat = lat.toString()
                 this@EditProfileFragment.lon = long.toString()
                 this@EditProfileFragment.address = address?.fullAddress
-                if (address?.fullAddress?.isNull()==false) {
+                if (address?.fullAddress?.isNull() == false) {
                     binding.etAddress.text = address?.fullAddress
                     // binding.btnLocateOnmap.setText(address?.fullAddress.toString())
                 }
@@ -211,15 +213,17 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         checkIfLocationEnabled()
     }
 
-     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        // Callback is invoked after the user selects a media item or closes the
-        // photo picker.
-        if (uri != null) {
-            CropImage.activity(uri)
-                .start(requireContext(), this)
-        } else {
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                CropImage.activity(uri)
+                    .start(requireContext(), this)
+            } else {
+            }
         }
-    }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -232,11 +236,12 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                         logo = file
 
                         binding.ivProfile.loadImage(file, isCircular = true)
-                     }
-                }  }
+                    }
+                }
+            }
         } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             //  val error = result.
-            showToast(   data?.extras.toString())
+            showToast(data?.extras.toString())
         }
     }
 }

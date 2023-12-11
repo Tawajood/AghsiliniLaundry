@@ -25,19 +25,21 @@ import kotlinx.android.synthetic.main.toolbar.view.tv_title
 
 @AndroidEntryPoint
 class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
- var state =1
+    var state = 1
 
-     private val mViewModel: AuthViewModel by viewModels()
-var countryCode ="+20"
+    private val mViewModel: AuthViewModel by viewModels()
+
+    //var countryCode ="+20"
     override fun onFragmentReady() {
-     state1()
+        state1()
         onClick()
-      mViewModel.apply {
+        mViewModel.apply {
             observe(viewState) {
                 handleViewState(it)
             }
         }
     }
+
     private fun handleViewState(action: AuthAction) {
         when (action) {
             is AuthAction.ShowLoading -> {
@@ -50,22 +52,22 @@ var countryCode ="+20"
             is AuthAction.PhoneChecked -> {
                 showProgress(false)
                 showToast(action.message)
- state2()
+                state2()
 
             }
 
-  is AuthAction.OtpChecked -> {
-      showToast(action.message)
-      showProgress(false)
- state3()
+            is AuthAction.OtpChecked -> {
+                showToast(action.message)
+                showProgress(false)
+                state3()
 
             }
- is AuthAction.ResetPasswordSucess -> {
-     showToast(action.message)
-     showProgress(false)
- findNavController().navigate(R.id.loginFragment)
-            }
 
+            is AuthAction.ResetPasswordSucess -> {
+                showToast(action.message)
+                showProgress(false)
+                findNavController().navigate(R.id.loginFragment)
+            }
 
 
             is AuthAction.ShowFailureMsg -> action.message?.let {
@@ -87,53 +89,57 @@ var countryCode ="+20"
 
     private fun onClick() {
         binding.tvResend.setPaintFlags(binding.tvResend.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
- binding.btnEnterNumber.setOnClickListener {
-     if(binding.etPhone.text.toString().isNullOrEmpty())
-         showToast(resources.getString(R.string.msg_empty_phone_number))
-
-         else {
-     mViewModel.email= binding.etPhone.text.toString()
-         mViewModel.checkPhone(countryCode,   mViewModel.email.toString())
-     }
- }
+        binding.btnEnterNumber.setOnClickListener {
+            if (binding.etPhone.text.toString().isNullOrEmpty())
+                showToast(resources.getString(R.string.msg_empty_phone_number))
+            else {
+                mViewModel.email = binding.etPhone.text.toString()
+                mViewModel.checkPhone("+${binding.ccp.selectedCountryCode}", mViewModel.email.toString())
+            }
+        }
         binding.btnEnterOtp.setOnClickListener {
-     if(binding.etOtp.otp.toString().isNullOrEmpty())
-         showToast(resources.getString(R.string.msg_empty_otp))
-
-         else {
-      mViewModel.otp= binding.etOtp.otp.toString()
-         mViewModel.checkOtp(countryCode,   mViewModel.email.toString(), mViewModel.otp.toString())
-     }
- }
-    binding.btnEnterOtp.setOnClickListener {
-     state3()
- }
-    binding.btnEnterPass.setOnClickListener {
-     mViewModel.isValidParamsChangePass(countryCode, binding.etPassword.text.toString(), binding.etPasswordConfim.text.toString())
- }
-    binding.btnEnterPass.setOnClickListener {
-        PrefsHelper.clear()
-        var intent = Intent(activity, AuthActivity::class.java)
-        intent.putExtra(Constants.Start, Constants.login)
-        startActivity(intent)
-        activity?.finish()
- }
+            if (binding.etOtp.otp.toString().isNullOrEmpty())
+                showToast(resources.getString(R.string.msg_empty_otp))
+            else {
+                mViewModel.otp = binding.etOtp.otp.toString()
+                mViewModel.checkOtp(
+                    "+${binding.ccp.selectedCountryCode}",
+                    mViewModel.email.toString(),
+                    mViewModel.otp.toString()
+                )
+            }
+        }
+        binding.btnEnterOtp.setOnClickListener {
+            state3()
+        }
+        binding.btnEnterPass.setOnClickListener {
+            mViewModel.isValidParamsChangePass(
+                "+${binding.ccp.selectedCountryCode}",
+                binding.etPassword.text.toString(),
+                binding.etPasswordConfim.text.toString()
+            )
+        }
+        binding.btnEnterPass.setOnClickListener {
+            PrefsHelper.clear()
+            var intent = Intent(activity, AuthActivity::class.java)
+            intent.putExtra(Constants.Start, Constants.login)
+            startActivity(intent)
+            activity?.finish()
+        }
         binding.toolbar.card_back.setOnClickListener {
-      if(state ==1){
-          findNavController().navigateUp()
-      }else if(state==2)
-      {
-          state1()
-      }
-      else{
-          state2()
-      }
+            if (state == 1) {
+                findNavController().navigateUp()
+            } else if (state == 2) {
+                state1()
+            } else {
+                state2()
+            }
         }
     }
 
 
     fun state1() {
-    binding.toolbar.tv_title.setText(resources.getText(R.string.forget_password))
+        binding.toolbar.tv_title.setText(resources.getText(R.string.forget_password))
         state = 1
         binding.lytState1.visibility = View.VISIBLE
         binding.lytState2.visibility = View.GONE
@@ -145,16 +151,16 @@ var countryCode ="+20"
         //counterDawn ()
         binding.toolbar.tv_title.setText(resources.getText(R.string.otp))
         state = 2
-        binding.lytState1 .visibility = View.GONE
+        binding.lytState1.visibility = View.GONE
         binding.lytState2.visibility = View.VISIBLE
         binding.lytState3.visibility = View.GONE
 
     }
 
     fun state3() {
-         state = 3
+        state = 3
         binding.toolbar.tv_title.setText(resources.getText(R.string.new_password))
-        binding.lytState1 .visibility = View.GONE
+        binding.lytState1.visibility = View.GONE
         binding.lytState2.visibility = View.GONE
         binding.lytState3.visibility = View.VISIBLE
 

@@ -43,7 +43,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private var logo: File? = null
     lateinit var parent: AuthActivity
     private val mViewModel: AuthViewModel by viewModels()
-    var countryCode = "+20"
     var lat: String? = ""
     var lon: String? = ""
     var address: String? = ""
@@ -107,7 +106,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         binding.btnSignup.setOnClickListener {
             mViewModel.isVaildRegisteration(
                 binding.etName.text.toString(),
-                countryCode,
+                "+${binding.ccp.selectedCountryCode}",
                 binding.etPhone.text.toString(),
                 lat, lon, address,
                 //  binding.etAddress.text.toString(),
