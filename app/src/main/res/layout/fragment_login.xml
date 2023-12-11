@@ -66,6 +66,7 @@
                     android:minHeight="@dimen/_40sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:text="01014324321"
+                    android:inputType="phone"
                     android:textColor="@color/grey_dark1"
                     android:textColorHint="@color/light_grey1"
                     android:textSize="@dimen/_13sdp"
