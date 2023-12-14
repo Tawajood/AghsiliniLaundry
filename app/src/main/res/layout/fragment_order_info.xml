@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-      android:visibility="gone"      android:paddingBottom="@dimen/_11sdp"
+            android:paddingBottom="@dimen/_11sdp"
+            android:visibility="gone"
             tools:context=".ui.fragment.order.OrderFragment">
 
             <RelativeLayout
@@ -78,27 +79,8 @@
                         android:src="@drawable/iv_back" />
 
                 </androidx.cardview.widget.CardView>
-                <TextView
-                    android:id="@+id/tv_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="@string/additional_cost"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/_12sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_tax_value" />
 
 
-                <TextView
-                    android:id="@+id/tv_add_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey_dark"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_add"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_add" />
 
                 <TextView
                     android:id="@+id/tv_status"
@@ -137,7 +119,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:padding="@dimen/_7sdp"
-                     app:layout_constraintBottom_toBottomOf="@id/card_back"
+                    app:layout_constraintBottom_toBottomOf="@id/card_back"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/card_back" />
 
@@ -272,9 +254,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginVertical="@dimen/_4sdp"
-     android:visibility="gone"                   android:backgroundTint="@color/light_grey"
+                        android:backgroundTint="@color/light_grey"
                         android:clickable="true"
                         android:focusable="true"
+                        android:visibility="gone"
                         app:cardCornerRadius="@dimen/_12sdp"
                         app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -303,11 +286,11 @@
                                 android:id="@+id/tv_driver_name"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
                                 android:textColor="@color/grey_dark"
                                 android:textSize="@dimen/_14sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                                app:layout_constraintEnd_toStartOf="@+id/card_call_driver"
                                 android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/card_call_driver"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/tv_00" />
 
@@ -499,13 +482,31 @@
                         android:id="@+id/tv_tax_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:textColor="@color/grey_dark"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_tax"
                         app:layout_constraintEnd_toEndOf="@id/rv_orders"
                         app:layout_constraintTop_toTopOf="@+id/tv_tax" />
+                    <TextView
+                        android:id="@+id/tv_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="تكلفة اضافية"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toStartOf="@id/rv_orders"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tax_value" />
 
+                    <TextView
+                        android:id="@+id/tv_add_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_add"
+                        app:layout_constraintEnd_toEndOf="@id/rv_orders"
+                        app:layout_constraintTop_toTopOf="@+id/tv_add" />
 
                     <View
                         android:id="@+id/view"
@@ -515,7 +516,7 @@
                         android:background="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_tax_value" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_add_value" />
 
                     <TextView
                         android:id="@+id/tv_total"
@@ -554,8 +555,9 @@
                             android:layout_height="@dimen/_50sdp"
                             android:layout_marginHorizontal="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:textAllCaps="false"          android:backgroundTint="@color/blue"
+                            android:backgroundTint="@color/blue"
                             android:text="@string/agree"
+                            android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
@@ -569,7 +571,8 @@
                             android:layout_marginHorizontal="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:backgroundTint="@color/light_grey"
-                            android:textAllCaps="false"     android:text="@string/decline"
+                            android:text="@string/decline"
+                            android:textAllCaps="false"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
@@ -594,8 +597,9 @@
                             android:layout_marginTop="@dimen/_20sdp"
                             android:backgroundTint="@color/black"
                             android:text="@string/dropoff"
+                            android:textAllCaps="false"
                             android:textColor="@color/white"
-                        android:textAllCaps="false"    android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:cornerRadius="@dimen/_21sdp"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -624,8 +628,9 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:backgroundTint="@color/black"
                         android:text="@string/dropoff"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textAllCaps="false"     android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         android:visibility="gone"
                         app:cornerRadius="@dimen/_21sdp"
