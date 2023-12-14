@@ -13,6 +13,8 @@ import com.dotjoo.aghsilinilaundry.data.response.OrderInfoResponse
 import com.dotjoo.aghsilinilaundry.databinding.FragmentOrderInfoBinding
 import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
 import com.dotjoo.aghsilinilaundry.ui.adapter.OrderInfoItemsAdapter
+import com.dotjoo.aghsilinilaundry.ui.dialog.EditBillSheetFragment
+import com.dotjoo.aghsilinilaundry.ui.dialog.OnClickLoginFirst
 import com.dotjoo.aghsilinilaundry.ui.fragment.main.home.OrderAction
 import com.dotjoo.aghsilinilaundry.ui.fragment.main.home.OrderViewModel
 import com.dotjoo.aghsilinilaundry.util.Constants
@@ -106,18 +108,15 @@ class OrderInfoFragment : BaseFragment<FragmentOrderInfoBinding>() {
         }
     }
 
-    /*  AcceptOrder(va
-      RejectOrder(va
-      ReciveOrder(va
-      startPrepOrder
-      EndPrepOrder
-      DeliverOrder(v*/
     private fun loadOrderData(data: OrderInfoResponse) {
         data?.let {
             binding.lytData.isVisible = true
             adapter.ordersList = it.order?.orderitems!!
             adapter.notifyDataSetChanged()
             binding.tvDeliveryFeesValue.setText(it.order?.delivery + " " + resources.getString(R.string.sr))
+            binding.cardCallClient.setOnClickListener {
+                data?.order?.customer_phone?.let { it1 -> call(it1) }
+            }
             binding.tvStatus.setText(it.order?.progress)
             binding.tvAddressUser.setText(it.order?.address)
             binding.tvClientName.setText(it.order?.customerName)
@@ -125,6 +124,7 @@ class OrderInfoFragment : BaseFragment<FragmentOrderInfoBinding>() {
             binding.tvTotalValue.setText(it.order?.total + " " + resources.getString(R.string.sr))
             binding.tvTaxValue.setText(it.order?.tax + " " + resources.getString(R.string.sr))
             binding.tvUrgent.isVisible = (it.order?.argent == 1)
+      if(it.order?.payment_type==1) binding.tvPayment.setText(R.string.wallet)
             handleStatus(it.order?.progress , it)
             state = it.order?.progress
         }
@@ -141,7 +141,7 @@ class OrderInfoFragment : BaseFragment<FragmentOrderInfoBinding>() {
 
             Constants.WAITING_DRIVER -> {
                 binding.ivStatus.loadImage(resources.getDrawable(R.drawable.state2))
-                binding.tvStatus.setText(resources.getString(R.string.driver_on_way))
+                binding.tvStatus.setText(resources.getString(R.string.waiting_driver))
                 binding.lytNewOrder.isVisible = false
                 binding.lytIndelivery.isVisible = true
 
@@ -153,6 +153,21 @@ class OrderInfoFragment : BaseFragment<FragmentOrderInfoBinding>() {
                 binding.lytNewOrder.isVisible = false
                 binding.lytIndelivery.isVisible = true
 
+                orderInfoResponse.order?.driver?.let {
+                    binding.cardDelivery.isVisible= true
+                    binding.tvDriverName.setText(it.name)
+                    binding.cardCallDriver.setOnClickListener {
+                        orderInfoResponse.order?.driver?.phone?.let { it1 -> call(it1) }
+                    }
+                }
+            }
+            Constants.DRIVER_IN_WAY_TO_LAUNDRY -> {
+                binding.ivStatus.loadImage(resources.getDrawable(R.drawable.state5))
+                binding.tvStatus.setText(resources.getString(R.string.preparied))
+                 binding.lytIndelivery.isVisible = false
+                binding.cardDelivery.isVisible = false
+                binding.btnStatus.isVisible = true
+                binding.btnStatus.setText(resources.getString(R.string.deliver))
                 orderInfoResponse.order?.driver?.let {
                     binding.cardDelivery.isVisible= true
                     binding.tvDriverName.setText(it.name)
@@ -251,9 +266,7 @@ binding.cardDelivery.isVisible= false
         binding.tvEditBill.setPaintFlags(binding.tvEditBill.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
         parent = requireActivity() as MainActivity
         parent.showBottomNav(false)
-        binding.tvEditBill.setOnClickListener {
-            //     findNavController().navigate(R.id.ed)
-        }
+
 
         binding.cardBack.setOnClickListener {
             findNavController().navigateUp()
@@ -268,6 +281,19 @@ binding.cardDelivery.isVisible= false
         binding.btnDoneDelivering.setOnClickListener {
             mViewModel.orderId?.let { it1 -> mViewModel.reciveOrder(it1) }
         }
+      binding.tvEditBill.setOnClickListener {
+          mViewModel.orderId?.let { it1 ->
+              EditBillSheetFragment.newInstance(object : OnClickLoginFirst {
+                  override fun onClick(choice: String) {
+
+                      mViewModel.orderId?.let {
+                          mViewModel.getOrderInfo(it)
+                      }
+                  }
+              } , it1).show(childFragmentManager, EditBillSheetFragment::class.java.canonicalName)
+          }
+      }
+
         binding.btnStatus.setOnClickListener {
             when (state) {
                 Constants.LAUNDRY_RECIVE -> {
@@ -284,6 +310,10 @@ binding.cardDelivery.isVisible= false
                     mViewModel.orderId?.let { it1 -> mViewModel.deliverOrder(it1) }
 
                 }
+                Constants.DRIVER_IN_WAY_TO_LAUNDRY -> {
+                    mViewModel.orderId?.let { it1 -> mViewModel.deliverOrder(it1) }
+
+                }
             }
         }
     }
@@ -292,8 +322,6 @@ binding.cardDelivery.isVisible= false
         adapter = OrderInfoItemsAdapter()
         binding.rvOrders.init(requireContext(), adapter, 2)
         binding.rvOrders.addItemDecoration(SimpleDividerItemDecoration(requireContext()))
-
-
     }
 
     fun call(tel: String) {

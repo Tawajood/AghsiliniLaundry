@@ -1,14 +1,17 @@
 package com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments
 
 import android.text.TextUtils
+import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.base.BaseFragment
+import com.dotjoo.aghsilinilaundry.data.PrefsHelper
 import com.dotjoo.aghsilinilaundry.data.response.Message
 import com.dotjoo.aghsilinilaundry.databinding.FragmentItBinding
 import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
 import com.dotjoo.aghsilinilaundry.ui.adapter.MessagesAdapter
+import com.dotjoo.aghsilinilaundry.util.Constants.EN
 import com.dotjoo.aghsilinilaundry.util.ext.hideKeyboard
 import com.dotjoo.aghsilinilaundry.util.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,9 +79,11 @@ class ItFragment : BaseFragment<FragmentItBinding>() {
         parent = requireActivity() as MainActivity
         parent.showBottomNav(false)
         binding.messagesRv.adapter = adapter
-        binding.cardClose.setOnClickListener {
+         binding.cardClose.setOnClickListener {
             findNavController().navigateUp()
         }
+        if(PrefsHelper.getLanguage()==EN)binding.sendImg.rotation=90f
+        else binding.sendImg.rotation=270f
         binding.cardSend.setOnClickListener {
             if (!TextUtils.isEmpty(binding.messageEt.text)) {
                 mViewModel.sendMessages(binding.messageEt.text.toString())

@@ -32,7 +32,7 @@ interface ApiInterface {
         @Field("password") password: String
     ): NetworkResponse<DevResponse<LoginResponse>, ErrorResponse>
 
-    @POST("api/update/fcmToken")
+    @POST("laundry/update/fcmToken")
     @FormUrlEncoded
     suspend fun updateFcnToken(
         @Field("device_token") device_token: String
@@ -52,7 +52,7 @@ interface ApiInterface {
         @Field("otp") otp: String
     ): NetworkResponse<DevResponse<Any>, ErrorResponse>
 
-    @POST("laundry/change/password")
+    @POST("laundry/reset/password")
     @FormUrlEncoded
     suspend fun changePassAfterForgert(
         @Field("country_code") country_code: String,
@@ -60,6 +60,13 @@ interface ApiInterface {
         @Field("otp") otp: String,
         @Field("password") password: String
     ): NetworkResponse<DevResponse<Any>, ErrorResponse>
+ @POST("laundry/edit/order")
+    @FormUrlEncoded
+    suspend fun editBill(
+        @Field("order_id") order_id: String,
+        @Field("price") price: String,
+        @Field("note") notes: String,
+     ): NetworkResponse<DevResponse<Any>, ErrorResponse>
 
     @POST("laundry/register")
     @Multipart

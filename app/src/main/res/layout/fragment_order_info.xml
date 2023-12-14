@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:paddingBottom="@dimen/_11sdp"
+      android:visibility="gone"      android:paddingBottom="@dimen/_11sdp"
             tools:context=".ui.fragment.order.OrderFragment">
 
             <RelativeLayout
@@ -402,7 +402,7 @@
                         android:layout_marginTop="@dimen/_7sdp"
                         android:drawableStart="@drawable/ic_pay_visa"
                         android:drawablePadding="@dimen/_6sdp"
-                        android:text="الكتروني"
+                        android:text="@string/e_pay"
                         android:textColor="@color/grey_dark"
                         android:textSize="@dimen/_11sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -534,7 +534,7 @@
                             android:layout_height="@dimen/_50sdp"
                             android:layout_marginHorizontal="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:backgroundTint="@color/blue"
+                            android:textAllCaps="false"          android:backgroundTint="@color/blue"
                             android:text="@string/agree"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
@@ -549,7 +549,7 @@
                             android:layout_marginHorizontal="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:backgroundTint="@color/light_grey"
-                            android:text="@string/decline"
+                            android:textAllCaps="false"     android:text="@string/decline"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
@@ -575,7 +575,7 @@
                             android:backgroundTint="@color/black"
                             android:text="@string/dropoff"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_12sdp"
+                        android:textAllCaps="false"    android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:cornerRadius="@dimen/_21sdp"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -605,7 +605,7 @@
                         android:backgroundTint="@color/black"
                         android:text="@string/dropoff"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"
+                        android:textAllCaps="false"     android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         android:visibility="gone"
                         app:cornerRadius="@dimen/_21sdp"

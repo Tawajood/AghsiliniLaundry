@@ -77,16 +77,16 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>()
 
             is OrderAction.NewOrdersOrders -> {
                 listNew= action.data.orders
-            if(state==NEW)    loadLaundries(listNew, NEW)
+            if(state==NEW)    stateNew()
 
             }
             is OrderAction.CurrentOrders -> {
                 listCurrent= action.data.orders
-                if(state==CURRNET)       loadLaundries(listCurrent, CURRNET)
+                if(state==CURRNET)    stateCurrent()
              }
    is OrderAction.PrevOrdersOrders -> {
                 listPrev= action.data.orders
-       if(state==FINISHED)    loadLaundries(listPrev, FINISHED)
+       if(state==FINISHED)   stateFinished()
             }
 
 

@@ -135,41 +135,48 @@ android:background="@color/light_grey"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_name" />
-
-                <EditText
-                    android:id="@+id/et_phone"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/lyt_phone"       android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                     android:orientation="horizontal"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:background="@drawable/bg_light_blue"
-                    android:hint="@string/phone_number"
-                    android:minHeight="@dimen/_40sdp"
-                    android:paddingHorizontal="@dimen/_15sdp"
-                    android:inputType="phone"
-                    android:textColor="@color/grey_dark"
-                    android:textColorHint="@color/light_grey1"
-                    android:textSize="@dimen/_11sdp"
-                    android:textStyle="bold"
+                    android:weightSum="6"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_1" />
-                <com.hbb20.CountryCodePicker
-                    android:id="@+id/ccp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:ccpDialog_cornerRadius="@dimen/_12sdp"
-                    app:ccp_arrowColor="@color/black"
-                    app:ccp_autoDetectCountry="true"
-                    app:ccp_contentColor="@color/black"
-                    app:ccp_defaultNameCode="sa"
-                    app:ccp_excludedCountries="il"
-                    app:ccp_rememberLastSelection="true"
-                    app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/_12sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_phone"
-                    app:layout_constraintEnd_toEndOf="@+id/et_phone"
-                    app:layout_constraintTop_toTopOf="@+id/et_phone" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_1"  >
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/country_code_picker"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:background="@drawable/bg_light_blue"
+                        android:clickable="true"
+                        android:gravity="center"
+                        app:ccp_defaultNameCode="SA"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showPhoneCode="true"
+                        app:ccp_textSize="@dimen/_12sdp" />
+
+                    <EditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="0dp"
+                        android:layout_weight="4.5"        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"           android:background="@drawable/bg_light_blue"
+                        android:hint="@string/phone_number"
+                          android:minHeight="@dimen/_40sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:textColor="@color/grey_dark"
+                        android:textAlignment="viewStart"           android:inputType="phone"            android:textColorHint="@color/light_grey1"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_1" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_2"
                     android:layout_width="0dp"
@@ -183,7 +190,7 @@ android:background="@color/light_grey"
                     android:textSize="@dimen/_13sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
+                    app:layout_constraintTop_toBottomOf="@id/lyt_phone" />
 
                 <TextView
                     android:id="@+id/et_address"
@@ -350,7 +357,7 @@ android:background="@color/light_grey"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:backgroundTint="@color/blue"
-                    android:text="@string/signup"
+                    android:textAllCaps="false"                 android:text="@string/signup"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold"
@@ -363,7 +370,7 @@ android:background="@color/light_grey"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:backgroundTint="@color/light_grey"
+                    android:textAllCaps="false"                    android:backgroundTint="@color/light_grey"
                     android:text="@string/login_now"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
@@ -373,20 +380,7 @@ android:background="@color/light_grey"
                     app:strokeColor="@color/light_grey"
                     app:strokeWidth="@dimen/_1sdp" />
 
-                <TextView
-                    android:id="@+id/tv_skip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/skip_register"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_signin" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

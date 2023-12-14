@@ -18,12 +18,15 @@ import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
 import com.dotjoo.aghsilinilaundry.util.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
+import javax.inject.Inject
 
 private const val CHANNEL_ID = "my_channel"
-
+@AndroidEntryPoint
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-
+@Inject
+lateinit var useCase:FcmUseCase
     override fun onNewToken(s: String) {
         super.onNewToken(s)
         Log.d("islam", "onNewToken: $s")
@@ -39,8 +42,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String?) {
-        Log.d("islam", "sendRegistrationTokenToServer($token)")
+        token?.let {   useCase.sendFcmTokenToServer(params =  FcmParam(it)) }
     }
+
 
     private fun showNotification(remoteMessage: Map<String, String>) {
         //val soundUri =

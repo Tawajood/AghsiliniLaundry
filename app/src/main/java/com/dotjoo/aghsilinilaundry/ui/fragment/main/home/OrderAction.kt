@@ -16,6 +16,7 @@ sealed class OrderAction : Action {
     data class OrderInfo(val data: OrderInfoResponse) : OrderAction()
     data class AcceptOrder(val msg: String) : OrderAction()
     data class RejectOrder(val msg: String) : OrderAction()
+    data class BillEdited(val msg: String) : OrderAction()
     data class ReciveOrder(val msg: String) : OrderAction()
     data class startPrepOrder(val msg: String) : OrderAction()
     data class EndPrepOrder(val msg: String) : OrderAction()

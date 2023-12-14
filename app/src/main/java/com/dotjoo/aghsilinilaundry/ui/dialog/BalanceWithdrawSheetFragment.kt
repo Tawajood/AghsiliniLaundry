@@ -21,8 +21,10 @@ import com.dotjoo.aghsilinilaundry.util.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 
 class BalanceWithdrawSheetFragment(var onClick: OnClickLoginFirst) : BottomSheetDialogFragment() {
 
@@ -78,7 +80,7 @@ class BalanceWithdrawSheetFragment(var onClick: OnClickLoginFirst) : BottomSheet
             }
 
             is SettingAction.ShowBalnaceWithdraw -> {
-                action.message?.let { showToast(requireContext(), it) }
+              //  action.message?.let { showToast(requireContext(), it) }
                 dismiss()
             }
 

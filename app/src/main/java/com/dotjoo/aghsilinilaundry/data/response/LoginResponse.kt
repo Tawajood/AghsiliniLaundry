@@ -16,6 +16,7 @@ data class Laundry(
     @SerializedName("country_code" ) var countryCode : String? = null,
     @SerializedName("logo"         ) var logo        : String? = null,
     @SerializedName("address"      ) var address     : String? = null,
+    @SerializedName("rate"      ) var rate     : String? = null,
     @SerializedName("id"      ) var id     : String? = null,
     @SerializedName("lat"          ) var lat         : String? = null,
     @SerializedName("lon"          ) var lon         : String? = null,

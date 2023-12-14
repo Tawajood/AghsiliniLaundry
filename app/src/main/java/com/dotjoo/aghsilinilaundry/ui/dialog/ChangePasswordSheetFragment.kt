@@ -24,8 +24,9 @@ import com.dotjoo.aghsilinilaundry.util.observe
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-
+@AndroidEntryPoint
 class ChangePasswordSheetFragment( ) :
     BottomSheetDialogFragment() {
 
@@ -81,7 +82,7 @@ class ChangePasswordSheetFragment( ) :
             }
 
             is AccountAction.ChangePassword -> {
-                showToast(requireContext(), action.msg)
+            //    showToast(requireContext(), action.msg)
        dismiss()     }
 
             else -> {

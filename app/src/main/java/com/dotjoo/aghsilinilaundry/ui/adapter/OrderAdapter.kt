@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.data.response.Order
 import com.dotjoo.aghsilinilaundry.databinding.ItemOrderBinding
-import com.dotjoo.aghsilinilaundry.ui.adapter.OrderType.NEW
 import com.dotjoo.aghsilinilaundry.ui.lisener.OnOrderClickListener
+import com.dotjoo.aghsilinilaundry.util.Constants
 
 object OrderType {
     val NEW = 0
@@ -20,7 +20,7 @@ object OrderType {
 }
 
 class OrderAdapter(
-   private val listener: OnOrderClickListener
+    private val listener: OnOrderClickListener
 ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     lateinit var context: Context
     var _binding: ItemOrderBinding? = null
@@ -38,29 +38,78 @@ class OrderAdapter(
 
     override fun onBindViewHolder(holder: OrderAdapter.OrderViewHolder, position: Int) {
         var currentItem = ordersList[position]
-holder.binding.tvId.setText("#${currentItem.id}")
-holder.binding.tvDate.setText("#${currentItem.created_at}")
-holder.binding.tvItems.setText("${currentItem.items_count}"+context.resources.getString(R.string.items))
-holder.binding.tvUrgent.isVisible=(currentItem.argent==1)
+        holder.binding.tvId.setText("#${currentItem.id}")
+        holder.binding.tvDate.setText("${currentItem.created_at}")
+        holder.binding.tvItems.setText("${currentItem.items_count}" +" "+ context.resources.getString(R.string.items))
+        holder.binding.tvUrgent.isVisible = (currentItem.argent == 1)
         holder.binding.root.setOnClickListener {
-        listener.onItemsClickLisener(currentItem)
+            listener.onItemsClickLisener(currentItem)
         }
-        when (type) {
-            NEW -> {
+
+        when (currentItem.status) {
+            Constants.NEW -> {
                 holder.binding.tvStatus.setText(
-                    context.resources.getString(R.string.new_order)
+                    context.resources.getString(R.string.new_)
                 )
                 holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
             }
 
-            OrderType.CURRNET -> {
+            Constants.DRIVER_IN_WAY -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.driver_on_way)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+            Constants.DRIVER_IN_WAY_TO_LAUNDRY -> {
                 holder.binding.tvStatus.setText(
                     context.resources.getString(R.string.driver_on_way)
                 )
                 holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
             }
 
-            OrderType.FINISHED -> {
+            Constants.WAITING_DRIVER -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.waiting_driver)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.DRIVER_RECIVE_FROM_CUSTOMER -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.driver_recive_from_customer)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.LAUNDRY_RECIVE -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.laundry_recive)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.START_PREPARE -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.start_prepare)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.END_PREPARED -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.end_prepared)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.DRIVER_RECIVE_FROM_LAUNDRY -> {
+                holder.binding.tvStatus.setText(
+                    context.resources.getString(R.string.driver_recive_from_laundry)
+                )
+                holder.binding.tvStatus.setTextColor(context.resources.getColor(R.color.orange))
+            }
+
+            Constants.COMPLETED -> {
                 holder.binding.tvStatus.setText(
                     context.resources.getString(R.string.deliverd)
                 )

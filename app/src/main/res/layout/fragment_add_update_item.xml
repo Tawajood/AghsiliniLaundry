@@ -40,12 +40,12 @@
                         android:backgroundTint="@color/transparent"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardCornerRadius="@dimen/_40sdp"
+                        app:cardCornerRadius="@dimen/_25sdp"
                         app:layout_constraintBottom_toBottomOf="@id/tv_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_title"
                         app:strokeColor="@color/white"
-                        app:strokeWidth="1dp">
+                        app:strokeWidth="2dp">
 
                         <ImageView
                             android:id="@+id/iv_back"
@@ -251,7 +251,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginHorizontal="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_30sdp"
+               android:textAllCaps="false"         android:layout_marginTop="@dimen/_30sdp"
                         android:backgroundTint="@color/blue"
                         android:text="@string/save"
                         android:textColor="@color/white"

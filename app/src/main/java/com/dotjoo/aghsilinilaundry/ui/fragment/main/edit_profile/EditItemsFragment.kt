@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.base.BaseFragment
+import com.dotjoo.aghsilinilaundry.data.PrefsHelper
 import com.dotjoo.aghsilinilaundry.data.response.ItemsInService
 import com.dotjoo.aghsilinilaundry.data.response.ServiceInLaundry
 import com.dotjoo.aghsilinilaundry.data.response.ServiceResponse
@@ -18,6 +19,7 @@ import com.dotjoo.aghsilinilaundry.ui.fragment.main.account.AccountAction
 import com.dotjoo.aghsilinilaundry.ui.fragment.main.account.AccountViewModel
 import com.dotjoo.aghsilinilaundry.ui.lisener.ItemsInLaundryClickListener
 import com.dotjoo.aghsilinilaundry.ui.lisener.ServiceClickListener
+import com.dotjoo.aghsilinilaundry.util.Constants
 import com.dotjoo.aghsilinilaundry.util.ext.hideKeyboard
 import com.dotjoo.aghsilinilaundry.util.ext.init
 import com.dotjoo.aghsilinilaundry.util.observe
@@ -77,7 +79,8 @@ class EditItemsFragment : BaseFragment<FragmentEditItemsBinding>(), ServiceClick
             is AccountAction.ShowServices -> {
                 loadServices(action.data)
            mViewModel.currentService = action.data.services.get(0)
-                binding.tvService.setText(resources.getString(R.string.service) +    mViewModel.currentService?.name)
+                if(PrefsHelper.getLanguage()==Constants.EN)        binding.tvService.setText(mViewModel.currentService?.name+" "+resources.getString(R.string.service)  )
+                else             binding.tvService.setText(resources.getString(R.string.service) +   " "+mViewModel.currentService?.name)
 
            mViewModel.currentService?.itemId?.let { it1 ->
                     mViewModel.getItemsInService(
@@ -164,8 +167,11 @@ class EditItemsFragment : BaseFragment<FragmentEditItemsBinding>(), ServiceClick
         adapterItems.ordersList = arrayListOf()
         adapterItems.notifyDataSetChanged()
    mViewModel.currentService = item
-        binding.tvService.setText(resources.getString(R.string.service) + item.name)
-   mViewModel.currentService?.itemId?.let { it1 ->
+
+        if(PrefsHelper.getLanguage()==Constants.EN)        binding.tvService.setText(item?.name +" "+resources.getString(R.string.service)  )
+        else           binding.tvService.setText(resources.getString(R.string.service) +   " "+item?.name)
+
+        mViewModel.currentService?.itemId?.let { it1 ->
             mViewModel.getItemsInService(
                 it1
             )

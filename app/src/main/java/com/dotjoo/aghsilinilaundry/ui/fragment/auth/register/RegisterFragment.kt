@@ -3,23 +3,20 @@ package com.dotjoo.aghsilinilaundry.ui.fragment.auth.register
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Paint
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.base.BaseFragment
-import com.dotjoo.aghsilinilaundry.data.PrefsHelper
-import com.dotjoo.aghsilinilaundry.data.param.AddAddressParams
+ import com.dotjoo.aghsilinilaundry.data.param.AddAddressParams
+import com.dotjoo.aghsilinilaundry.data.param.RegisterParams
 import com.dotjoo.aghsilinilaundry.databinding.FragmentRegisterBinding
 import com.dotjoo.aghsilinilaundry.ui.activity.AuthActivity
-import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
+import com.dotjoo.aghsilinilaundry.ui.dialog.CheckOtpSheetFragment
+import com.dotjoo.aghsilinilaundry.ui.dialog.OnPhoneCheckedWithOtp
 import com.dotjoo.aghsilinilaundry.ui.fragment.auth.login.AuthAction
 import com.dotjoo.aghsilinilaundry.ui.fragment.auth.login.AuthViewModel
 import com.dotjoo.aghsilinilaundry.util.FileManager
@@ -28,7 +25,6 @@ import com.dotjoo.aghsilinilaundry.util.WWLocationManager
 import com.dotjoo.aghsilinilaundry.util.ext.hideKeyboard
 import com.dotjoo.aghsilinilaundry.util.ext.isNull
 import com.dotjoo.aghsilinilaundry.util.ext.loadImage
-import com.dotjoo.aghsilinilaundry.util.ext.showActivity
 import com.dotjoo.aghsilinilaundry.util.observe
 import com.dotjoo.aghsilinilaundry.util.openLocationSettingsResultLauncher
 import com.dotjoo.aghsilinilaundry.util.requestAppPermissions
@@ -43,9 +39,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private var logo: File? = null
     lateinit var parent: AuthActivity
     private val mViewModel: AuthViewModel by viewModels()
+
     var lat: String? = ""
     var lon: String? = ""
     var address: String? = ""
+    var verified_countryCode = ""
+    var verified_phone: String? = null
 
     @Inject
     lateinit var locationManager: WWLocationManager
@@ -72,13 +71,28 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
             is AuthAction.RegisterSucess -> {
                 showProgress(false)
-                //  action.data.client?.social= action.social
-                PrefsHelper.saveUserData(action.data)
-                PrefsHelper.saveToken(action.data.token)
-                goHome()
-
+                findNavController().navigate(R.id.waitingActivationFragment ,null,
+                    NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
+                )
             }
 
+            is AuthAction.ShowRegisterVaildation -> {
+                showProgress(false)
+               mViewModel.register(action.data)/* if (verified_phone.isNullOrEmpty() || verified_phone == null) {
+                    verified_phone?.let { mViewModel.checkPhone(verified_countryCode, it) }
+                  //  showCheckOtp(action.data)
+
+                } else {
+                    if (verified_phone == action.data.phone && verified_countryCode == action.data.country_code) {
+                        mViewModel.register(action.data)
+                    }
+                    else {
+                        showCheckOtp(action.data)
+                    }
+                }*/
+
+
+            }
 
             is AuthAction.ShowFailureMsg -> action.message?.let {
                 if (it.contains("401") == true) {
@@ -96,21 +110,41 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         }
     }
 
+    public fun  showCheckOtp(data: RegisterParams)
+    {
+        CheckOtpSheetFragment.newInstance("+" + binding.countryCodePicker.selectedCountryCode.toString(),
+            binding.etPhone.text.toString(),
+            object : OnPhoneCheckedWithOtp {
+                override fun onClick(
+                    country_code: String, phone: String, verifed: Boolean
+                ) {
+                    verified_phone = phone
+                    verified_countryCode = country_code
+                    mViewModel.register(data)
+                }
+            }).show(
+            childFragmentManager, "CheckOtpSheetFragment"
+        )
+    }
 
     private fun onClick() {
         parent = requireActivity() as AuthActivity
         binding.toolbar.tv_title.setText(resources.getString(R.string.new_user))
         binding.tvTermsandcondito.setPaintFlags(binding.tvTermsandcondito.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-
+        address?.let {
+            binding.etAddress.setText(it)
+        }
+        logo?.let {
+            binding.ivLogo.loadImage(it, isCircular = true)
+        }
 
         binding.btnSignup.setOnClickListener {
             mViewModel.isVaildRegisteration(
                 binding.etName.text.toString(),
-                "+${binding.ccp.selectedCountryCode}",
+                "+${binding.countryCodePicker.selectedCountryCode}",
                 binding.etPhone.text.toString(),
                 lat, lon, address,
-                //  binding.etAddress.text.toString(),
-                binding.etPassword.text.toString(),
+                 binding.etPassword.text.toString(),
                 binding.etPasswordConfim.text.toString(),
                 logo
             )
@@ -126,14 +160,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         binding.toolbar.iv_back.setOnClickListener {
-            activity?.finish()
+findNavController().navigateUp()        }
+        binding.tvTermsandcondito.setOnClickListener {
+            findNavController().navigate(R.id.termsFragment2 )
+                //null,
+           //     NavOptions.Builder().setPopUpTo(R.id.registerFragment, false).build())
         }
     }
 
-    fun goHome() {
-        showActivity(MainActivity::class.java, clearAllStack = true)
-
-    }
 
 
     private fun openMaps() {

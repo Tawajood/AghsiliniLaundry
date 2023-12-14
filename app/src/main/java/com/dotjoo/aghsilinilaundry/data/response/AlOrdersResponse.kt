@@ -25,6 +25,7 @@ data class Order(
      @SerializedName("laundry") var laundry: String? = null,
      @SerializedName("items_count") var items_count: String? = null,
      @SerializedName("created_at") var created_at: String? = null,
+     @SerializedName("status") var status: String? = null,
     @SerializedName("argent") var argent: Int? = null,
 
     @SerializedName("logo") var logo: String? = null,
@@ -57,16 +58,22 @@ data class ServiceInLaundry(
 @Parcelize
 data class ItemsInService(
 
-
-    @SerializedName("id"           ) var id          : String?    = null,
-    @SerializedName("laundry_id"   ) var laundryId   : String?    = null,
-    @SerializedName("service_id"   ) var serviceId   : String?    = null,
-    @SerializedName("price"        ) var price       : String?    = null,
-    @SerializedName("argent_price" ) var argentPrice : String?    = null,
-    @SerializedName("created_at"   ) var createdAt   : String? = null,
-    @SerializedName("updated_at"   ) var updatedAt   : String? = null,
-    @SerializedName("name"         ) var name        : String? = null,
+    @SerializedName("id"           ) var id          : Int?    = null,
+    @SerializedName("name"         ) var name        : Name?   = Name(),
+    @SerializedName("price"        ) var price       : Int?    = null,
+    @SerializedName("argent_price" ) var argentPrice : Int?    = null,
+    @SerializedName("locale"       ) var locale      : String? = null,
     var count :Int ? =0
+
+) : Parcelable
+
+@Parcelize
+
+
+data class Name (
+
+    @SerializedName("ar" ) var ar : String? = null,
+    @SerializedName("en" ) var en : String? = null
 
 ) : Parcelable
 
@@ -79,6 +86,8 @@ data class OrderInfo(
     @SerializedName("progress"      ) var progress     : String?              = null,
     @SerializedName("address"      ) var address     : String?              = null,
     @SerializedName("total"         ) var total        : String?              = null,
+    @SerializedName("customer_phone" ) var customer_phone : String?           = null,
+    @SerializedName("payment_type" ) var payment_type : Int?           = null,
     @SerializedName("customer_name" ) var customerName : String?           = null,
     @SerializedName("lat"           ) var lat          : String?           = null,
     @SerializedName("lon"           ) var lon          : String?              = null,
@@ -113,7 +122,8 @@ data class Item(
 @SerializedName("argent_price" ) var argentPrice : Int?    = null,
 @SerializedName("created_at"   ) var createdAt   : String? = null,
 @SerializedName("updated_at"   ) var updatedAt   : String? = null,
-@SerializedName("name"         ) var name        : String? = null
+@SerializedName("service"   ) var service   : ServiceInLaundry? = null,
+    @SerializedName("name"         ) var name        : String? = null
 
 ) : Parcelable
 

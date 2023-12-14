@@ -139,14 +139,22 @@ fun isValidParamsChangePass(countryCode: String,    newpass: String, confirmpass
             false
         } else {
             //  if(emailVerified == email ) {
-            register(
+            produce(AuthAction.ShowRegisterVaildation(
                 RegisterParams(
                     name,
                     country_code, phone, lat, lon,
                     address,
                     pass, repeated_pass , logo
                 )
-            )
+            ) )
+         /*   register(
+                RegisterParams(
+                    name,
+                    country_code, phone, lat, lon,
+                    address,
+                    pass, repeated_pass , logo
+                )
+            )*/
         }
         //    else {
         //       register(email)

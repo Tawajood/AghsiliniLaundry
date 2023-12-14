@@ -63,7 +63,7 @@ class AccountViewModel
             produce(AccountAction.ShowLoading(true))
 
             viewModelScope.launch {
-                var res = useCaseProfile.invoke(
+                 useCaseProfile.invoke(
                     viewModelScope
                 ) { res ->
                     when (res) {
@@ -151,6 +151,7 @@ class AccountViewModel
         }
     }
     fun isVaildUpdateItem(
+        id:String,
         argent_price: String?,
         price: String?,
         ar_name: String?,
@@ -169,7 +170,7 @@ class AccountViewModel
             produce(AccountAction.ShowFailureMsg(getString(R.string.msg_empty_en_name)))
             return   false
         } else {
-            updateItem(  argent_price, price,   ar_name, en_name  )
+            updateItem(  argent_price, price,   ar_name, en_name , id )
           return  true
         }
     }
@@ -210,14 +211,14 @@ class AccountViewModel
     }
 
     fun updateItem(
-        argent_price: String, price: String, ar_name: String, en_name: String
+        argent_price: String, price: String, ar_name: String, en_name: String, id: String
     ) {
         if (app.let { it1 -> NetworkConnectivity.hasInternetConnection(it1) } == true) {
             produce(AccountAction.ShowLoading(true))
 
             viewModelScope.launch {
                 var res =
-                    useCase.invoke(viewModelScope, PrefsHelper.getUserData()?.laundry?.id?.let {
+                    useCase.invoke(viewModelScope,  id?.let {
                         UpdateItemParam(
                             argent_price, price, it, ar_name, en_name
                         )
@@ -265,7 +266,7 @@ class AccountViewModel
             produce(AccountAction.ShowLoading(true))
 
             viewModelScope.launch {
-                var res = useCase.invoke(
+                var res = useCaseProfile.invoke(
                     viewModelScope, params
                 ) { res ->
                     when (res) {
@@ -286,7 +287,7 @@ class AccountViewModel
             produce(AccountAction.ShowLoading(true))
 
             viewModelScope.launch {
-                var res = useCase.invoke(
+                var res = useCaseProfile.invoke(
                     viewModelScope, 1
                 ) { res ->
                     when (res) {

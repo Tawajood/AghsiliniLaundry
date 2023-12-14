@@ -12,6 +12,9 @@ import com.dotjoo.aghsilinilaundry.data.PrefsHelper
 import com.dotjoo.aghsilinilaundry.databinding.FragmentMoreBinding
 import com.dotjoo.aghsilinilaundry.ui.activity.AuthActivity
 import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
+import com.dotjoo.aghsilinilaundry.ui.dialog.BalanceWithdrawSheetFragment
+import com.dotjoo.aghsilinilaundry.ui.dialog.ChangeDelteAccountSheetFragment
+import com.dotjoo.aghsilinilaundry.ui.dialog.OnClickLoginFirst
 import com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.SettingAction
 import com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.SettingViewModel
 import com.dotjoo.aghsilinilaundry.util.Constants
@@ -38,7 +41,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         if (PrefsHelper.getLanguage()==Constants.AR) {
             binding.tvLang.text="EN"
         }else{
-            binding.tvLang.text="AR"
+            binding.tvLang.text="العربية"
         }
         binding.swiperefreshHome.setOnRefreshListener {
             mViewModel.getWallet()
@@ -70,9 +73,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
             is SettingAction.ShowBalanceInWallet -> {
                 val df = DecimalFormat("#.##")
                 df.roundingMode = RoundingMode.CEILING
-                binding.tvCommestionValue.setText(df.format(action.data.commetion!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
-                binding.tvProfitValue.setText(df.format(action.data.net_profit!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
-                binding.tvTotalValue.setText(df.format(action.data.total_sales!!.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvCommestionValue.setText(df.format(action.data.commetion?.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvProfitValue.setText(df.format(action.data.net_profit?.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvTotalValue.setText(df.format(action.data.total_sales?.toDouble()).toString()+" " + resources.getString(R.string.sr))
+                binding.tvBalanceValue.setText(df.format(action.data.balance?.toDouble()).toString()+" " + resources.getString(R.string.sr))
                 binding.lytBalanceDetails.isVisible = true
             }
 
@@ -114,6 +118,11 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         }
         binding.tvIt.setOnClickListener {
             findNavController().navigate(R.id.itFragment)
+        }
+  binding.tvWithdraw.setOnClickListener {
+      BalanceWithdrawSheetFragment.newInstance(object : OnClickLoginFirst {
+          override fun onClick(choice: String) {}
+      }).show(childFragmentManager, BalanceWithdrawSheetFragment::class.java.canonicalName)
         }
 
         binding.tvLogout.setOnClickListener {

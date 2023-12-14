@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dotjoo.aghsilinilaundry.R
+import com.dotjoo.aghsilinilaundry.data.PrefsHelper
 import com.dotjoo.aghsilinilaundry.data.response.ItemsInService
 import com.dotjoo.aghsilinilaundry.databinding.ItemItemsBinding
 import com.dotjoo.aghsilinilaundry.ui.lisener.ItemsInLaundryClickListener
 import com.dotjoo.aghsilinilaundry.util.Constants
+import com.dotjoo.aghsilinilaundry.util.Constants.EN
 
 class ItemsAdapter(
     private val listener: ItemsInLaundryClickListener
@@ -34,14 +36,14 @@ class ItemsAdapter(
 
         var currentItem = ordersList[position]
         holder.binding.tvEdit.setPaintFlags(holder.binding.tvEdit.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-
-        holder.binding.tvTitle.setText(currentItem.name.toString())
+if(PrefsHelper.getLanguage()==EN)        holder.binding.tvTitle.setText(currentItem.name?.en.toString())
+else       holder.binding.tvTitle.setText(currentItem.name?.ar.toString())
         if (urgent) holder.binding.tvPrice.setText(
-            currentItem.argentPrice.toString() + context?.getString(
+            currentItem.argentPrice.toString() +" "+ context?.getString(
                 R.string.sr
             )
         )
-        else holder.binding.tvPrice.setText(currentItem.price.toString() + context?.getString(R.string.sr))
+        else holder.binding.tvPrice.setText(currentItem.price.toString()  +" "+  context?.getString(R.string.sr))
         holder.binding.tvEdit.setOnClickListener {
             listener.onEditItemsClickLisener(currentItem)
         }

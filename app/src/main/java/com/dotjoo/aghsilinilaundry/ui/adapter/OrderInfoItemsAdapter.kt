@@ -30,7 +30,8 @@ class OrderInfoItemsAdapter(
     override fun onBindViewHolder(holder: ItemsCheckoutViewHolder, position: Int) {
 
         var currentItem = ordersList[position]
-        holder.binding.tvTitle.setText(currentItem.item?.name)
+         holder.binding.tvTitle.setText(currentItem.item?.name)
+        holder.   binding.  tvService.setText("("+currentItem.item?.service?.name+")")
         holder.binding.tvPrice.setText(currentItem.price.toString() +" "+ context.getText(R.string.sr))
         holder.binding.tvNumAddItional.setText(currentItem.count.toString() +"x")
     }

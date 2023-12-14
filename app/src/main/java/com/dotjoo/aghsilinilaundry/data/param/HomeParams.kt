@@ -19,6 +19,7 @@ data class UpdateItemParam( val argent_price: String,
                           val  ar_name: String,
                          val  en_name: String, )
 data class OrderInfoParam(val orderID: String = "", val type :Int? )
+data class EditOrderBillParam(val orderID: String , val price :String, val notes :String )
 
 data class UpdateProfileParam(
 

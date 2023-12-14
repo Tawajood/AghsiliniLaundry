@@ -42,15 +42,14 @@
                         android:id="@+id/rv_notifactions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_8sdp"
+                         android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:itemCount="0"
+                        tools:itemCount="4"
                         tools:listitem="@layout/item_notifaction" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,6 +3,8 @@ package com.dotjoo.aghsilinilaundry.ui.fragment.auth.forget_password
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,9 +30,7 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
     var state = 1
 
     private val mViewModel: AuthViewModel by viewModels()
-
-    //var countryCode ="+20"
-    override fun onFragmentReady() {
+     override fun onFragmentReady() {
         state1()
         onClick()
         mViewModel.apply {
@@ -66,8 +66,11 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
             is AuthAction.ResetPasswordSucess -> {
                 showToast(action.message)
                 showProgress(false)
-                findNavController().navigate(R.id.loginFragment)
-            }
+                PrefsHelper.clear()
+                var intent = Intent(activity, AuthActivity::class.java)
+                intent.putExtra(Constants.Start, Constants.login)
+                startActivity(intent)
+                activity?.finish()            }
 
 
             is AuthAction.ShowFailureMsg -> action.message?.let {
@@ -94,7 +97,7 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
                 showToast(resources.getString(R.string.msg_empty_phone_number))
             else {
                 mViewModel.email = binding.etPhone.text.toString()
-                mViewModel.checkPhone("+${binding.ccp.selectedCountryCode}", mViewModel.email.toString())
+                mViewModel.checkPhone("+${binding.countryCodePicker.selectedCountryCode}", mViewModel.email.toString())
             }
         }
         binding.btnEnterOtp.setOnClickListener {
@@ -103,7 +106,7 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
             else {
                 mViewModel.otp = binding.etOtp.otp.toString()
                 mViewModel.checkOtp(
-                    "+${binding.ccp.selectedCountryCode}",
+                    "+${binding.countryCodePicker.selectedCountryCode}",
                     mViewModel.email.toString(),
                     mViewModel.otp.toString()
                 )
@@ -114,18 +117,12 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
         }
         binding.btnEnterPass.setOnClickListener {
             mViewModel.isValidParamsChangePass(
-                "+${binding.ccp.selectedCountryCode}",
+                "+${binding.countryCodePicker.selectedCountryCode}",
                 binding.etPassword.text.toString(),
                 binding.etPasswordConfim.text.toString()
             )
         }
-        binding.btnEnterPass.setOnClickListener {
-            PrefsHelper.clear()
-            var intent = Intent(activity, AuthActivity::class.java)
-            intent.putExtra(Constants.Start, Constants.login)
-            startActivity(intent)
-            activity?.finish()
-        }
+
         binding.toolbar.card_back.setOnClickListener {
             if (state == 1) {
                 findNavController().navigateUp()
@@ -148,7 +145,7 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
     }
 
     fun state2() {
-        //counterDawn ()
+       counterDawn ()
         binding.toolbar.tv_title.setText(resources.getText(R.string.otp))
         state = 2
         binding.lytState1.visibility = View.GONE
@@ -165,4 +162,35 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
         binding.lytState3.visibility = View.VISIBLE
 
     }
+
+    private var restTimer: CountDownTimer? = null
+    private fun counterDawn() {
+        binding.tvResend.isEnabled = false
+        binding.tvResend.setTextColor(resources.getColor(R.color.grey_400))
+        binding.tvTimer.setTextColor(resources.getColor(R.color.grey_400))
+
+        restTimer = object : CountDownTimer(120000, 1000) {
+
+
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds: Long = millisUntilFinished / 1000 % 60
+                val minutes: Long = (millisUntilFinished - seconds) / 1000 / 60
+                binding.tvTimer.text = "" + minutes + ":" + seconds
+                Log.d(
+                    "remainingremaining g", ("" + minutes + ":" + seconds).toString()
+                )
+            }
+
+
+            override fun onFinish() {
+                binding.tvResend.setText(resources.getString(R.string.resend))
+                binding.tvTimer.text = ""
+                binding.tvResend.isEnabled = true
+                binding.tvResend.setTextColor(resources.getColor(R.color.black))
+
+
+            }
+        }.start()
+    }
+
 }

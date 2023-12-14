@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.base.BaseFragment
+import com.dotjoo.aghsilinilaundry.data.PrefsHelper
 import com.dotjoo.aghsilinilaundry.data.param.AddAddressParams
 import com.dotjoo.aghsilinilaundry.data.param.UpdateProfileParam
 import com.dotjoo.aghsilinilaundry.data.response.Laundry
@@ -17,7 +18,9 @@ import com.dotjoo.aghsilinilaundry.databinding.FragmentEditProfileBinding
 import com.dotjoo.aghsilinilaundry.ui.activity.MainActivity
 import com.dotjoo.aghsilinilaundry.ui.dialog.ChangeDelteAccountSheetFragment
 import com.dotjoo.aghsilinilaundry.ui.dialog.ChangePasswordSheetFragment
+import com.dotjoo.aghsilinilaundry.ui.dialog.CheckOtpSheetFragment
 import com.dotjoo.aghsilinilaundry.ui.dialog.OnClickLoginFirst
+import com.dotjoo.aghsilinilaundry.ui.dialog.OnPhoneCheckedWithOtp
 import com.dotjoo.aghsilinilaundry.ui.fragment.auth.register.MapBottomSheet
 import com.dotjoo.aghsilinilaundry.ui.fragment.auth.register.onLocationClick
 import com.dotjoo.aghsilinilaundry.ui.fragment.main.account.AccountAction
@@ -44,7 +47,8 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     var lon: String? = ""
     var address: String? = ""
     var logo: File? = null
-
+    var verified_countryCode = ""
+    var verified_phone: String? = null
     @Inject
     lateinit var locationManager: WWLocationManager
 
@@ -94,10 +98,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                 action.msg?.let { showToast(it) }
 
             }
-
-
             else -> {
-
             }
         }
     }
@@ -105,6 +106,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     private fun setupLaundry(laundry: Laundry) {
         laundry?.let {
+            PrefsHelper.saveUserData(it)
             binding.etName.setText(it.name)
             binding.etAddress.setText(it.address)
             binding.ivProfile.loadImage(it.logo)
@@ -129,7 +131,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
         }
         binding.lytChangePass.setOnClickListener {
-            findNavController().navigate(R.id.editProfileFragment)
+          findNavController().navigate(R.id.changePasswordSheetFragment)
         }
 
         binding.cardClose.setOnClickListener {
@@ -162,6 +164,87 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
 
         }
+
+
+
+
+             /*   binding.btnSave.setOnClickListener { if (verified_phone != null || verified_phone !=null) {
+                    if (verified_phone ==  binding.etPhone.text.toString()) {
+
+                        lat?.let { it1 ->
+                        mViewModel.updateProfile(
+                            UpdateProfileParam(
+                                binding.etName.text.toString(),
+                                "+${binding.ccp.selectedCountryCode}",
+                                binding.etPhone.text.toString(),
+                                it1, lon!!, address, logo
+                            )
+                        )
+                    }
+                }else {
+                    verified_phone= null
+
+                        CheckOtpSheetFragment.newInstance("+${binding.ccp.selectedCountryCode}",
+                            binding.etPhone.text.toString(),
+                            object : OnPhoneCheckedWithOtp {
+                                override fun onClick(
+                                    country_code: String, phone: String, verifed: Boolean
+                                ) {
+                                    verified_phone = phone
+                                    verified_countryCode = country_code
+                                    lat?.let { it1 ->
+                                        mViewModel.updateProfile(
+                                            UpdateProfileParam(
+                                                binding.etName.text.toString(),
+                                                "+${binding.ccp.selectedCountryCode}",
+                                                binding.etPhone.text.toString(),
+                                                it1, lon!!, address, logo
+                                            )
+                                        )
+                                    }
+                                }
+                            }).show(
+                            childFragmentManager, "CheckOtpSheetFragment"
+                        )
+                    }
+                }
+                else {
+                    if( binding.etPhone.text.toString()== PrefsHelper.getUserData()?.phone.toString()  && "+${binding.ccp.selectedCountryCode}" == PrefsHelper.getUserData()?.countryCode)
+                        lat?.let { it1 ->
+                            mViewModel.updateProfile(
+                                UpdateProfileParam(
+                                    binding.etName.text.toString(),
+                                    "+${binding.ccp.selectedCountryCode}",
+                                    binding.etPhone.text.toString(),
+                                    it1, lon!!, address, logo
+                                )
+                            )
+                        }else{
+                        CheckOtpSheetFragment.newInstance("+${binding.ccp.selectedCountryCode}",
+                            binding.etPhone.text.toString(),
+                            object : OnPhoneCheckedWithOtp {
+                                override fun onClick(
+                                    country_code: String, phone: String, verifed: Boolean
+                                ) {
+                                    verified_phone = phone
+                                    verified_countryCode = country_code
+                                    lat?.let { it1 ->
+                                        mViewModel.updateProfile(
+                                            UpdateProfileParam(
+                                                binding.etName.text.toString(),
+                                                "+${binding.ccp.selectedCountryCode}",
+                                                binding.etPhone.text.toString(),
+                                                it1, lon!!, address, logo
+                                            )
+                                        )
+                                    }
+                                }
+                            }).show(
+                            childFragmentManager, "CheckOtpSheetFragment"
+                        )
+                    }
+                }*/
+
     }
 
     private fun openMaps() {

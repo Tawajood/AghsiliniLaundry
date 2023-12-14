@@ -1,11 +1,6 @@
 package com.dotjoo.aghsilinilaundry.ui.fragment.auth.login
 
 import android.graphics.Paint
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dotjoo.aghsilinilaundry.R
@@ -22,8 +17,8 @@ import kotlinx.android.synthetic.main.toolbar.view.iv_back
 import kotlinx.android.synthetic.main.toolbar.view.tv_title
 
 @AndroidEntryPoint
-class LoginFragment
-    : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+
     lateinit var parent: AuthActivity
     val mViewModel: AuthViewModel by viewModels()
 
@@ -48,7 +43,7 @@ class LoginFragment
             is AuthAction.LoginSuccess -> {
                 showProgress(false)
                 PrefsHelper.saveToken(action.data.token)
-                PrefsHelper.saveUserData(action.data)
+                PrefsHelper.saveUserData(action.data.laundry)
                 goHome()
 
             }
@@ -80,7 +75,7 @@ class LoginFragment
             mViewModel.isVaildLogin(
                 binding.etLaundryName.text.toString(),
                 binding.etPassword.text.toString(),
-                "+${binding.ccp.selectedCountryCode}",
+                "+${binding.countryCodePicker.selectedCountryCode}",
             )
             //  action.data.client?.social= action.social
             // PrefsHelper.saveToken("ction.data.token")

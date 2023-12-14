@@ -17,6 +17,7 @@ import com.dotjoo.aghsilinilaundry.ui.adapter.laundryInfo.ServiceAdapter
 import com.dotjoo.aghsilinilaundry.ui.fragment.main.edit_profile.EditItemsFragment
 import com.dotjoo.aghsilinilaundry.ui.lisener.ItemsInLaundryClickListener
 import com.dotjoo.aghsilinilaundry.ui.lisener.ServiceClickListener
+import com.dotjoo.aghsilinilaundry.util.Constants
 import com.dotjoo.aghsilinilaundry.util.ext.hideKeyboard
 import com.dotjoo.aghsilinilaundry.util.ext.init
 import com.dotjoo.aghsilinilaundry.util.ext.loadImage
@@ -38,7 +39,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), ServiceClickList
         onClick()
         initAdapters()
          setupLaundry()
+
         mViewModel.apply {
+            getProfileData()
             getServices()
             observe(viewState) {
                 handleViewState(it)
@@ -52,10 +55,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), ServiceClickList
     }
 
     private fun setupLaundry() {
-        PrefsHelper.getUserData()?.laundry?.let {
+        PrefsHelper.getUserData()?.let {
             binding.tvLaundryName.setText(it.name)
             binding.tvAddress.setText(it.address)
-            //     binding.tvRate.setText(it.ra)
+              binding.tvRate.setText(it.rate)
             binding.ivLogo.loadImage(it.logo, isCircular = true)
         }
     }
@@ -95,6 +98,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), ServiceClickList
 
             }
 
+            is AccountAction.ShowProfile -> {
+                action.data.laundry?.let { PrefsHelper.saveUserData(it) }
+                setupLaundry()
+            }
 
             else -> {
 
@@ -106,6 +113,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), ServiceClickList
 
         data.services?.get(0)?.choosen = true
         adapterServices.ordersList = data.services
+
+        if(PrefsHelper.getLanguage()==Constants.EN)        binding.tvService.setText(data.services.get(0)?.name+" "+resources.getString(R.string.service)  )
+        else             binding.tvService.setText(resources.getString(R.string.service) +   " "+data.services.get(0)?.name)
+
         adapterServices.notifyDataSetChanged()
 
     }
@@ -114,7 +125,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), ServiceClickList
     private fun onClick() {
         parent = requireActivity() as MainActivity
         parent.showBottomNav(true)
-
         binding.titleRegular.setOnClickListener {
             stateRegular()
         }
@@ -167,35 +177,22 @@ findNavController().navigate(R.id.editProfileFragment)        }
             binding.rvItems.isVisible= true
 
         } else {
-     //       binding.lytEmptyState.isVisible= true
-       //     binding.rvItems.isVisible= false
 
         }
 
 
     }
 
-    var orderlist: HashMap<String, ItemsInService> = hashMapOf()
-    var count = 0
 
-
-    private fun showBasketAddition(count: Int) {
-        if (count > 0) {
-            binding.tvCount.text = count.toString() + resources.getString(R.string.items)
-            binding.tvPrice.text = (count * 15).toString() + resources.getString(R.string.sar)
-            binding.tvPrice.setText(price.toString() + resources.getString(R.string.sar))
-            binding.lytBasket.isVisible = true
-
-        } else {
-            binding.lytBasket.isVisible = false
-
-        }
-    }
 
     override fun onServiceClickLisener(item: ServiceInLaundry) {
         adapterItems.ordersList = arrayListOf()
         adapterItems.notifyDataSetChanged()
-          mViewModel.currentService = item
+        if(PrefsHelper.getLanguage()==Constants.EN)        binding.tvService.setText(item?.name +" "+resources.getString(R.string.service)  )
+        else           binding.tvService.setText(resources.getString(R.string.service) +   " "+item?.name)
+
+
+        mViewModel.currentService = item
 
               mViewModel.currentService?.itemId?.let { it1 ->
                 mViewModel.getItemsInService(
@@ -206,8 +203,7 @@ findNavController().navigate(R.id.editProfileFragment)        }
     }
 
     override fun onItemsClickLisener(item: ItemsInService) {
-        TODO("Not yet implemented")
-    }
+     }
 
     override fun onEditItemsClickLisener(item: ItemsInService) {
         mViewModel.itemsInService = item

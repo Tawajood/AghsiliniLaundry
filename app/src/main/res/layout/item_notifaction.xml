@@ -13,14 +13,28 @@
         android:paddingVertical="@dimen/_5sdp">
 
 
-        <ImageView
+        <com.google.android.material.card.MaterialCardView
+
             android:id="@+id/iv_logo"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:src="@drawable/notifaction_icon"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_30sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/light_grey"
+            app:strokeWidth="@dimen/_2sdp">
+
+            <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo_small" />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/tv_title"
@@ -47,8 +61,9 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:text="اختار من بين العديد من المغسلات و حدد طلبك"
             android:textColor="@color/grey"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="@dimen/_12sdp"     app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
@@ -57,8 +72,8 @@
             android:layout_height="wrap_content"
             android:drawableTint="@color/black"
             android:text="12/12/2023"
-            android:textColor="@color/grey"
             android:textAlignment="textEnd"
+            android:textColor="@color/grey"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_title"

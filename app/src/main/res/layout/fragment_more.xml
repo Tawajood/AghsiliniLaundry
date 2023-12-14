@@ -95,22 +95,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
+                    <HorizontalScrollView
                         android:id="@+id/lyt_balance_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_14sdp"
                         android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:weightSum="3"
-                        app:layout_constraintTop_toTopOf="parent">
-
+                         app:layout_constraintTop_toTopOf="parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:layout_weight="1"
+                    android:minWidth="@dimen/_100sdp"        android:layout_weight="1"
                             android:background="@drawable/bg_rounded_corner"
                             android:backgroundTint="@color/light_grey"
                             android:minHeight="@dimen/_80sdp"
@@ -163,11 +165,11 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_rounded_corner"
+                            android:minWidth="@dimen/_90sdp"           android:background="@drawable/bg_rounded_corner"
                             android:backgroundTint="@color/light_grey"
                             android:minHeight="@dimen/_80sdp"
                             android:padding="@dimen/_10sdp"
@@ -221,10 +223,10 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_rounded_corner"
+                            android:minWidth="@dimen/_90sdp"             android:background="@drawable/bg_rounded_corner"
                             android:backgroundTint="@color/light_grey"
                             android:minHeight="@dimen/_80sdp"
                             android:padding="@dimen/_10sdp"
@@ -275,7 +277,62 @@
                                 android:textStyle="bold"
                                 app:layout_constraintTop_toBottomOf="@id/tv_3" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="@dimen/_90sdp"                 android:layout_weight="1"
+                            android:background="@drawable/bg_rounded_corner"
+                       android:layout_marginStart="@dimen/_10sdp"     android:backgroundTint="@color/light_grey"
+                            android:minHeight="@dimen/_80sdp"
+                            android:padding="@dimen/_10sdp"
+                            app:cardCornerRadius="@dimen/_8sdp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/iv4"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:backgroundTint="@color/white"
+                                app:cardCornerRadius="@dimen/_60sdp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:strokeColor="@color/white">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_total"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+
+                                    />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <TextView
+                                android:id="@+id/tv_4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:gravity="center_vertical"
+                                android:text="@string/balance"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/_10sdp"
+
+                                app:layout_constraintTop_toBottomOf="@id/iv4" />
+
+                            <TextView
+                                android:id="@+id/tv_balance_value"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/grey_dark"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toBottomOf="@id/tv_4" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>            </HorizontalScrollView>
 
 
                     <TextView

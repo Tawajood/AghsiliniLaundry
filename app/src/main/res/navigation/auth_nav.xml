@@ -2,6 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:defaultNavHost="true"
     android:id="@+id/auth_nav.xml"
     app:startDestination="@id/splashFragment">
 
@@ -26,4 +27,12 @@
         android:id="@+id/forgetPasswordFragment"
         android:name="com.dotjoo.aghsilinilaundry.ui.fragment.auth.forget_password.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" />
+    <fragment
+        android:id="@+id/waitingActivationFragment"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.auth.register.WaitingActivationFragment"
+        android:label="WaitingActivationFragment" />
+    <fragment
+        android:id="@+id/termsFragment2"
+        android:name="com.dotjoo.aghsilinilaundry.ui.fragment.settingFragments.TermsFragment"
+        android:label="TermsFragment" />
 </navigation>

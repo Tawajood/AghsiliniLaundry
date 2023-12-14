@@ -9,14 +9,16 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_11sdp"     android:backgroundTint="@color/white"    android:layoutDirection="rtl"
-        app:cardCornerRadius="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_11sdp"
+        android:backgroundTint="@color/white"
+         app:cardCornerRadius="@dimen/_8sdp"
         app:strokeColor="@color/light_grey"
         app:strokeWidth="@dimen/_1sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:backgroundTint="@color/white"     android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:layout_height="match_parent"
             android:padding="@dimen/_4sdp">
 
 
@@ -87,7 +89,8 @@
                 android:layout_height="wrap_content"    android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/light_grey"
-  android:visibility="gone"              android:minWidth="@dimen/_90sdp"
+  android:visibility="gone"
+                android:minWidth="@dimen/_90sdp"
                 app:cardCornerRadius="@dimen/_14sdp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_items"

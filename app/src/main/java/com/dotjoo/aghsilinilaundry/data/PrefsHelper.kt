@@ -2,6 +2,7 @@ package com.dotjoo.aghsilinilaundry.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.dotjoo.aghsilinilaundry.data.response.Laundry
 import com.dotjoo.aghsilinilaundry.data.response.LoginResponse
 import com.dotjoo.aghsilinilaundry.util.Constants
 import com.google.gson.Gson
@@ -57,7 +58,7 @@ object PrefsHelper {
         return preferences.getString(Constants.FCM_TOKEN,"").toString()
     }
 
-    fun saveUserData(user: LoginResponse?) {
+    fun saveUserData(user: Laundry?) {
         //set variables of 'myObject', etc.
 
         var prefsEditor = preferences.edit()
@@ -68,12 +69,12 @@ object PrefsHelper {
         prefsEditor.commit();
     }
 
-    fun getUserData(): LoginResponse? {
+    fun getUserData(): Laundry? {
         //set variables of 'myObject', etc.
 
         val gson = Gson()
         val json: String? = preferences.getString(Constants.USER, "")
-        return gson.fromJson(json, LoginResponse::class.java)
+        return gson.fromJson(json, Laundry::class.java)
     }
 
 }

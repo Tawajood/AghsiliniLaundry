@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.dotjoo.aghsilinilaundry.R
 import com.dotjoo.aghsilinilaundry.base.BaseViewModel
+import com.dotjoo.aghsilinilaundry.data.param.EditOrderBillParam
 import com.dotjoo.aghsilinilaundry.data.param.OrderInfoParam
 import com.dotjoo.aghsilinilaundry.data.response.AlOrdersResponse
 import com.dotjoo.aghsilinilaundry.data.response.Order
@@ -19,6 +20,7 @@ import com.dotjoo.aghsilinilaundry.domain.OrderUseCase
 import com.dotjoo.aghsilinilaundry.domain.OrderUseCase.OrderTypes.CURRENT
 import com.dotjoo.aghsilinilaundry.domain.OrderUseCase.OrderTypes.NEWw
 import com.dotjoo.aghsilinilaundry.domain.OrderUseCase.OrderTypes.PREV
+import com.dotjoo.aghsilinilaundry.fcm.FcmUseCase
 import com.dotjoo.aghsilinilaundry.util.NetworkConnectivity
 import com.dotjoo.aghsilinilaundry.util.Resource
 
@@ -35,16 +37,21 @@ class OrderViewModel
     app: Application,
     val useCase: OrderUseCase,
     val useCaseOrderActions: OrderActionsUseCase,
+    val useCaseFcm: FcmUseCase,
  ) : BaseViewModel<OrderAction>(app) {
 
-    private val _cuurentOrders =
+/*    private val _cuurentOrders =
         MutableStateFlow<Resource<ArrayList<Order>>>(Resource.Progress(true))
-    val current = _cuurentOrders.asStateFlow()
+    val curre00000nt = _cuurentOrders.asStateFlow()
 
     private val _newOrders = MutableStateFlow<Resource<kotlin.collections.ArrayList<Order>>>(Resource.Progress(true))
-    val new = _newOrders.asStateFlow()
+    val new = _newOrders.asStateFlow()*/
 var orderId:String? =null
-
+init {
+    getCurrentOrder()
+    getNewOrders()
+    getPrevOrders()
+}
     fun getCurrentOrder() {
 
         if (app.let { it1 -> NetworkConnectivity.hasInternetConnection(it1) } == true) {
@@ -201,6 +208,27 @@ var orderId:String? =null
             produce(OrderAction.ShowFailureMsg(getString(R.string.no_internet)))
         }
     }
+    fun editBill(orderID: String ,   price :String,   notes :String) {
+        if (app.let { it1 -> NetworkConnectivity.hasInternetConnection(it1) } == true) {
+            produce(OrderAction.ShowLoading(true))
+
+            viewModelScope.launch {
+                var res = useCaseOrderActions.invoke(
+                    viewModelScope, EditOrderBillParam(orderID ,   price  ,   notes)
+                ) { res ->
+                    when (res) {
+                        is Resource.Failure -> produce(OrderAction.ShowFailureMsg(res.message.toString()))
+                        is Resource.Progress -> produce(OrderAction.ShowLoading(res.loading))
+                        is Resource.Success -> {
+                            produce(OrderAction.BillEdited(res.data?.message as String))
+                        }
+                    }
+                }
+            }
+        } else {
+            produce(OrderAction.ShowFailureMsg(getString(R.string.no_internet)))
+        }
+    }
    fun reciveOrder(orderID: String) {
         if (app.let { it1 -> NetworkConnectivity.hasInternetConnection(it1) } == true) {
             produce(OrderAction.ShowLoading(true))
@@ -286,8 +314,11 @@ var orderId:String? =null
             produce(OrderAction.ShowFailureMsg(getString(R.string.no_internet)))
         }
     }
-
-
+    fun updateToken(    ) {
+        if (app.let { it1 -> NetworkConnectivity.hasInternetConnection(it1) } == true) {
+            useCaseFcm.generateFcmToken()
+        }
+    }
 }
 
 

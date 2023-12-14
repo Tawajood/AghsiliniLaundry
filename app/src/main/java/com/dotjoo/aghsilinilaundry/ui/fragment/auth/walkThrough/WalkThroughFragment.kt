@@ -1,7 +1,6 @@
 package com.dotjoo.aghsilinilaundry.ui.fragment.auth.walkThrough
 
-import android.content.Intent
-import android.graphics.Color
+ import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController

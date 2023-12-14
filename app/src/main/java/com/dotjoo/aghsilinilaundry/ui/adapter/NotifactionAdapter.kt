@@ -33,8 +33,7 @@ class NotifactionAdapter(
         notifyItemRangeChanged(position, notifactionsItemsList.size)
     }
 
-    var time = ""
-    var date = ""
+     var date = ""
 
     override fun onBindViewHolder(holder: NotifactionViewHolder, position: Int) {
         try {

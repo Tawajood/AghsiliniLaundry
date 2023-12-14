@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_top"
-        android:gravity="center"
-      >
+        android:gravity="center">
 
 
         <TextView
@@ -36,7 +35,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-             android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_8sdp"
             android:src="@drawable/ic_close"
             app:layout_constraintBottom_toTopOf="@id/txt2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,9 +71,9 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:backgroundTint="@color/black"
             android:text="@string/yes_delte"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"
+            android:textSize="@dimen/_11sdp"
             app:cornerRadius="@dimen/_21sdp"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,21 +87,23 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:backgroundTint="@color/light_grey"
             android:text="@string/no_thankes"
+            android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"
-             app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/_11sdp"
+            app:cornerRadius="@dimen/_21sdp"
+            app:layout_constraintBottom_toTopOf="@id/progress_bar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tv_2"
-        app:layout_constraintBottom_toTopOf="@id/progress_bar"
-        app:cornerRadius="@dimen/_21sdp" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_2" />
+
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progress_bar"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:paddingTop="@dimen/_15sdp"    app:indicatorColor="@color/blue"
+            android:paddingTop="@dimen/_15sdp"
+            android:visibility="gone"
+            app:indicatorColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
 
             />
