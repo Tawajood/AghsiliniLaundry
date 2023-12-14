@@ -119,6 +119,8 @@ class OrderInfoFragment : BaseFragment<FragmentOrderInfoBinding>() {
             }
             binding.tvStatus.setText(it.order?.progress)
             binding.tvAddressUser.setText(it.order?.address)
+            binding.tvAddValue.setText(it.order?.additional_cost + " " + resources.getString(R.string.sr))
+
             binding.tvClientName.setText(it.order?.customerName)
             binding.tvSubTotalValue.setText(it?.totalItemsPrice + " " + resources.getString(R.string.sr))
             binding.tvTotalValue.setText(it.order?.total + " " + resources.getString(R.string.sr))

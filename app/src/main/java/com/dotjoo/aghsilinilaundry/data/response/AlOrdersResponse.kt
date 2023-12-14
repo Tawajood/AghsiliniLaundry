@@ -89,6 +89,8 @@ data class OrderInfo(
     @SerializedName("customer_phone" ) var customer_phone : String?           = null,
     @SerializedName("payment_type" ) var payment_type : Int?           = null,
     @SerializedName("customer_name" ) var customerName : String?           = null,
+    @SerializedName("additional_cost") var additional_cost: String? = null,
+
     @SerializedName("lat"           ) var lat          : String?           = null,
     @SerializedName("lon"           ) var lon          : String?              = null,
     @SerializedName("laundry_id"    ) var laundryId    : String?              = null,
